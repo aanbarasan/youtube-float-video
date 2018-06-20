@@ -1,0 +1,23 @@
+{
+  "name": "Helper",
+  "description": "Help in chrome",
+  "version": "1.0",
+  "icons": { "16": "helper.png",
+           "48": "helper.png",
+          "128": "helper.png" },
+  "permissions": [
+    "activeTab", "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["commonFunction.js","content-script.js"]
+    }
+  ],
+  "options_page": "options_page.html",
+  "browser_action": {
+    "default_title": "Helper"
+  },
+  "manifest_version": 2
+}
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Test Extension Options</title>
+  <style type="text/css">
+    *{
+      box-sizing: border-box;
+    }
+    .fixedToast{
+      display: none;
+      border: 2px solid green;
+      padding: 10px;
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      background-color: #48b348;
+      color: white;
+      font-size: 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+  </style>
+  <script type="text/javascript" src="commonFunction.js"></script>
+</head>
+<body>
+  <div style="width: 100%; padding: 30px 10% 30px 10%;">
+    <div style="background-color: #d6d6d6; padding: 5px 20px 5px 20px;">
+      <div style="margin-top: 10px;">
+        <label style="padding: 10px;display: block;font-size: 14px;">
+          <input type="checkbox" id="enableYoutubeCheckBox" style="vertical-align: middle;" />
+          <span style="vertical-align: middle;">Enable for youtube</span>
+        </label>
+      </div>
+      <div style="padding: 5px 20px 5px 20px;">
+        <label style="padding: 10px;display: block;font-size: 14px;">
+          <input type="checkbox" id="enableYoutubePlayerPauseButton" style="vertical-align: middle;" />
+          <span style="vertical-align: middle;">Anywhere in the page press space bar to pause player.</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div id="fixedToastDiv" class="fixedToast">
+    <div id="fixedToastContent">
+      Updated Succesfully
+    </div>
+  </div>
+
+  <script src="options_page_script.js"></script>
+</body>
+</html>
