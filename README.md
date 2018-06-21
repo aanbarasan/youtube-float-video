@@ -1,2 +1,2 @@
-# helper
-Helper chrome extension
+# Helper
+It is a chrome extension. In youtube some enhancement made by this extension. It will work on all the sites based on the options enabled.
