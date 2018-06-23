@@ -1,10 +1,10 @@
 {
   "name": "Helper",
-  "description": "Help in chrome",
+  "description": "Youtube extra functionality. Based on the reqeust will work on all the sites.",
   "version": "1.0",
-  "icons": { "16": "helper.png",
-           "48": "helper.png",
-          "128": "helper.png" },
+  "icons": { "16": "image/16_icon.png",
+           "48": "image/48_icon.png",
+          "128": "image/128_icon.png" },
   "permissions": [
     "activeTab", "storage"
   ],

@@ -1,25 +1,67 @@
 
-var storageVariables = [helper_obj.enableyoutube, helper_obj.youtubepause];
+var storageVariables = [helper_obj.enableyoutube, helper_obj.youtubepause, 
+					helper_obj.floatyoutube, helper_obj.middleaddclose];
 
 helper_startupfunction("youtube.com", function(){
 	helper_getStorageVariablesFromSync(storageVariables, function(result){
 		if(result[helper_obj.enableyoutube]){
 			addYoutTubeKeyBoardFunctions(result);
-			addYoutTubeContentChangeListener(result);
-
+			startOnYoutubeFunction(result);
+			floatYoutubeViewFunction(result);
 		}
 	});
 });
+
+function floatYoutubeViewFunction(result){
+	if(result[helper_obj.floatyoutube]){ 
+		tryAgainWithTimeout(5, 500, function(){
+			var vidplayer = document.getElementById("player-container");
+			if(vidplayer){
+				var boudingRectAngle = vidplayer.getBoundingClientRect();
+				vidplayer.style.width = boudingRectAngle.width+"px";
+				vidplayer.style.height = boudingRectAngle.height+"px";
+				vidplayer.style.position = "fixed";
+				vidplayer.style.zIndex = "10000";
+				return true;
+			}
+		});
+	}
+}
+
+function startOnYoutubeFunction(result){
+	if(result[helper_obj.middleaddclose]){
+		tryAgainWithTimeout(5, 1000, function(){
+		    var head = document.getElementsByTagName('head')[0];
+			if(head != null){
+				var css = '.ad-container { display : none !important; }';
+			    var style = document.createElement('style');
+				style.type = 'text/css';
+				if (style.styleSheet){
+				  // This is required for IE8 and below.
+				  style.styleSheet.cssText = css;
+				} else {
+				  style.appendChild(document.createTextNode(css));
+				}
+				head.appendChild(style);
+				return true;
+			}
+		});
+	}
+}
 
 function addYoutTubeKeyBoardFunctions(result){
 	var bodyTag = document.getElementsByTagName("body")[0];
 	bodyTag.addEventListener("keypress", function(event){
 		if(result[helper_obj.youtubepause]){
-			if(event.code == "Space"){
-				if(!(event.target.localName == "input" && event.target.type == "text")){
-					var container = document.getElementById("player-container");
-					var playButton = container.getElementsByClassName("ytp-play-button")[0];
-					playButton.click();
+			if(!(event.target.localName == "input" && event.target.type == "text")){
+				if(event.charCode == 32){
+					var vid = document.getElementsByClassName("html5-main-video")[0];
+					if(vid.paused == true){
+						vid.play();
+					}
+					else{
+						vid.pause();	
+					}
 					event.preventDefault();
 				}
 			}
@@ -27,29 +69,3 @@ function addYoutTubeKeyBoardFunctions(result){
 	});
 }
 
-function addYoutTubeContentChangeListener(result){
-	// Select the node that will be observed for mutations
-	var targetNode = document.getElementById('movie_player');
-
-	// Options for the observer (which mutations to observe)
-	var config = { attributes: true };
-
-	// Callback function to execute when mutations are observed
-	var callback = function(mutationsList) {
-	    for(var mutation of mutationsList) {
-			if (mutation.type == 'attributes') {
-	            console.log('The ' + mutation.attributeName + ' attribute was modified.');
-	            console.log(mutation);
-	        }
-	    }
-	};
-
-	// Create an observer instance linked to the callback function
-	var observer = new MutationObserver(callback);
-
-	// Start observing the target node for configured mutations
-	// observer.observe(targetNode, config);
-
-	// Later, you can stop observing
-	// observer.disconnect();
-}
