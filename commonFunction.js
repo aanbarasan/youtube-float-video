@@ -18,7 +18,7 @@ function helper_startupfunction(hostName, callback){
 				var data = {};
 				data[helper_obj.enableyoutube] = true;
 				data[helper_obj.youtubepause] = true;
-				data[helper_obj.floatyoutube] = true;
+				data[helper_obj.floatyoutube] = false;
 				data[helper_obj.middleaddclose] = true;
 				data[helper_obj.startup] = true;
 				saveStorage(data, function(){
