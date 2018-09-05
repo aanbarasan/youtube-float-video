@@ -5,7 +5,7 @@ var storageVariables = [helper_obj.enableyoutube, helper_obj.youtubepause,
 helper_startupfunction("youtube.com", function(){
 	helper_getStorageVariablesFromSync(storageVariables, function(result){
 		if(result[helper_obj.enableyoutube]){
-			addYoutTubeKeyBoardFunctions(result);
+			// addYoutTubeKeyBoardFunctions(result);
 			startOnYoutubeFunction(result);
 			floatYoutubeViewFunction(result);
 		}
