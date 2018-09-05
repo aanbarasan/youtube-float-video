@@ -53,7 +53,8 @@ function addYoutTubeKeyBoardFunctions(result){
 	var bodyTag = document.getElementsByTagName("body")[0];
 	bodyTag.addEventListener("keypress", function(event){
 		if(result[helper_obj.youtubepause]){
-			if(!(event.target.localName == "input" && event.target.type == "text")){
+			if(!((event.target.localName == "input" || event.target.localName == "textarea")
+					&& (event.target.type == "text" || event.target.type == "textarea"))){
 				if(event.charCode == 32){
 					var vid = document.getElementsByClassName("html5-main-video")[0];
 					if(vid.paused == true){
