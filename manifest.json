@@ -1,7 +1,8 @@
 {
-  "name": "Helper",
+  "name": "Youtube float video",
+  "short_name": "Helper",
   "description": "Youtube extra functionality. Based on the reqeust will work on all the sites.",
-  "version": "1.1",
+  "version": "1.1.1",
   "icons": { "16": "image/16_icon.png",
            "48": "image/48_icon.png",
           "128": "image/128_icon.png" },
@@ -16,7 +17,7 @@
   ],
   "options_page": "options_page.html",
   "browser_action": {
-    "default_title": "Helper"
+    "default_title": "Youtube float video"
   },
   "background": {
     "scripts": ["background.js"]
