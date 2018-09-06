@@ -37,57 +37,12 @@ function floatYoutubeViewFunction(result){
 					if(vidplayer.getBoundingClientRect().bottom < 1){
 						if(bannerViewEnabled == false){
 							bannerViewEnabled = true;
-							var bannerHeight = 150;
-							var bannerView = document.createElement("div");
-							bannerView.id = "bannerView";
-							bannerView.style.position = "fixed";
-							bannerView.style.width  = "100%";
-							bannerView.style.height = bannerHeight + "px";
-							bannerView.style.backgroundColor = "white";
-							bannerView.style.zIndex = 61;
-							var closeButton = document.createElement("div");
-							closeButton.style.display = "table-cell";
-							closeButton.style.position = "absolute";
-							closeButton.style.right = "0px";
-							closeButton.style.cursor = "pointer";
-							closeButton.style.fontSize = "30px";
-							closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
-							closeButton.innerHTML = "X";
-							closeButton.onclick = function(event){
-								closeBannerView = true;
-								removedBannerAndBackToNormal();
-							}
-							bannerView.appendChild(closeButton);
-							ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
-							var vid = document.getElementsByClassName("html5-main-video")[0];
-							videoWidth = vid.style.width;
-							videoHeight = vid.style.height;
-							videoTop = vid.style.top;
-							videoLeft = vid.style.left;
-
-							var vHeight = bannerHeight - 3;
-							var normalWidth = 640;
-							if(typeof vid.style.width == "string"){
-								normalWidth = vid.style.width.replace("px","");
-								normalWidth = parseInt(normalWidth);
-							}
-							var normalHeight = 350;
-							if(typeof vid.style.height == "string"){
-								normalHeight = vid.style.height.replace("px","");
-								normalHeight = parseInt(normalHeight);
-							}
-							vWidth = (normalWidth / normalHeight) * vHeight;
-							vid.style.height = vHeight + "px";
-							vid.style.width = vWidth + "px";
-							vid.style.top = bannerView.getBoundingClientRect().top + "px";
-							vid.style.left = (bannerView.getBoundingClientRect().left + 10) + "px";
-							vid.style.position = "fixed";
-							var vidContainer = document.getElementsByClassName("html5-video-container")[0];
-							vidContainer.style.zIndex = 62;
+							addBannerInTheYoutubePage();
 						}
 					}
 					else{
 						if(bannerViewEnabled == true){
+							bannerViewEnabled = false;
 							removedBannerAndBackToNormal();
 						}
 					}
@@ -99,8 +54,59 @@ function floatYoutubeViewFunction(result){
 					videoTop = vid.style.top;
 					videoLeft = vid.style.left;
 				});
+
+				function addBannerInTheYoutubePage(){
+					var bannerHeight = 150;
+					var bannerView = document.createElement("div");
+					bannerView.id = "bannerView";
+					bannerView.style.position = "fixed";
+					bannerView.style.width  = "100%";
+					bannerView.style.height = bannerHeight + "px";
+					bannerView.style.backgroundColor = "white";
+					bannerView.style.zIndex = 61;
+					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
+					var closeButton = document.createElement("div");
+					closeButton.style.display = "table-cell";
+					closeButton.style.position = "absolute";
+					closeButton.style.right = "0px";
+					closeButton.style.cursor = "pointer";
+					closeButton.style.fontSize = "30px";
+					closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
+					closeButton.innerHTML = "X";
+					closeButton.onclick = function(event){
+						closeBannerView = true;
+						removedBannerAndBackToNormal();
+					}
+					bannerView.appendChild(closeButton);
+					ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
+					var vid = document.getElementsByClassName("html5-main-video")[0];
+					videoWidth = vid.style.width;
+					videoHeight = vid.style.height;
+					videoTop = vid.style.top;
+					videoLeft = vid.style.left;
+
+					var vHeight = bannerHeight - 3;
+					var normalWidth = 640;
+					if(typeof vid.style.width == "string"){
+						normalWidth = vid.style.width.replace("px","");
+						normalWidth = parseInt(normalWidth);
+					}
+					var normalHeight = 350;
+					if(typeof vid.style.height == "string"){
+						normalHeight = vid.style.height.replace("px","");
+						normalHeight = parseInt(normalHeight);
+					}
+					vWidth = (normalWidth / normalHeight) * vHeight;
+					vid.style.height = vHeight + "px";
+					vid.style.width = vWidth + "px";
+					vid.style.top = bannerView.getBoundingClientRect().top + "px";
+					vid.style.left = (bannerView.getBoundingClientRect().left + 10) + "px";
+					vid.style.position = "fixed";
+					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
+					vidContainer.style.zIndex = 62;
+				}
+
 				function removedBannerAndBackToNormal(){
-					bannerViewEnabled = false;
 					var bannerView = document.getElementById("bannerView");
 					bannerView.remove();
 					var vid = document.getElementsByClassName("html5-main-video")[0];
