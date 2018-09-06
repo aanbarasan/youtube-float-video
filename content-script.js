@@ -25,7 +25,6 @@ function floatYoutubeViewFunction(result){
 				var videoHeight = "";
 				var videoTop = "";
 				var videoLeft = "";
-				vidTag.style.transition = "top 1s";
 				window.addEventListener("scroll", function(event) {
 					if(closeBannerView){
 						return;
