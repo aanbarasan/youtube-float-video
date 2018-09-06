@@ -15,25 +15,29 @@ helper_startupfunction("youtube.com", function(){
 function floatYoutubeViewFunction(result){
 	if(result[helper_obj.floatyoutube]){ 
 		tryAgainWithTimeout(5, 500, function(){
-			var bannerViewEnabled = false;
-			var closeBannerView = false;
-			var videoWidth = "";
-			var videoHeight = "";
-			var videoTop = "";
-			var videoLeft = "";
 			var vidplayer = document.getElementById("player-container");
 			var vidTag = document.getElementsByClassName("html5-main-video")[0];
 			if(vidplayer && vidTag){
+				console.log("float video enabled");
+				var bannerViewEnabled = false;
+				var closeBannerView = false;
+				var videoWidth = "";
+				var videoHeight = "";
+				var videoTop = "";
+				var videoLeft = "";
 				vidTag.style.transition = "top 1s";
 				window.addEventListener("scroll", function(event) {
 					if(closeBannerView){
+						return;
+					}
+					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
+					if(ytdWatch.hidden){
 						return;
 					}
 					if(vidplayer.getBoundingClientRect().bottom < 1){
 						if(bannerViewEnabled == false){
 							bannerViewEnabled = true;
 							var bannerHeight = 150;
-							var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
 							var bannerView = document.createElement("div");
 							bannerView.id = "bannerView";
 							bannerView.style.position = "fixed";
