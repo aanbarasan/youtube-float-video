@@ -26,22 +26,19 @@ function floatYoutubeViewFunction(result){
 				var videoTop = "";
 				var videoLeft = "";
 				window.addEventListener("scroll", function(event) {
-					if(closeBannerView){
-						return;
-					}
 					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-					if(ytdWatch.hidden){
+					if(closeBannerView || ytdWatch.hidden){
 						return;
 					}
 					if(vidplayer.getBoundingClientRect().bottom < 1){
-						if(bannerViewEnabled == false){
-							bannerViewEnabled = true;
+						var bannerView = document.getElementById("bannerView");
+						if(bannerView == null){
 							addBannerInTheYoutubePage();
 						}
 					}
 					else{
-						if(bannerViewEnabled == true){
-							bannerViewEnabled = false;
+						var bannerView = document.getElementById("bannerView");
+						if(bannerView != null){
 							removedBannerAndBackToNormal();
 						}
 					}
