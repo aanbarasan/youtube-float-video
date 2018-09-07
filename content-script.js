@@ -26,8 +26,15 @@ function floatYoutubeViewFunction(result){
 				var videoTop = "";
 				var videoLeft = "";
 				window.addEventListener("scroll", function(event) {
+					
+					if(closeBannerView){
+						return;
+					}
 					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-					if(closeBannerView || ytdWatch.hidden){
+					if(!ytdWatch){
+						ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
+					}
+					if(ytdWatch && ytdWatch.hidden){
 						return;
 					}
 					if(vidplayer.getBoundingClientRect().bottom < 1){
@@ -60,7 +67,6 @@ function floatYoutubeViewFunction(result){
 					bannerView.style.height = bannerHeight + "px";
 					bannerView.style.backgroundColor = "white";
 					bannerView.style.zIndex = 61;
-					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
 					var closeButton = document.createElement("div");
 					closeButton.style.display = "table-cell";
 					closeButton.style.position = "absolute";
@@ -74,6 +80,10 @@ function floatYoutubeViewFunction(result){
 						removedBannerAndBackToNormal();
 					}
 					bannerView.appendChild(closeButton);
+					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
+					if(!ytdWatch){
+						ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
+					}
 					ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
 					var vid = document.getElementsByClassName("html5-main-video")[0];
 					videoWidth = vid.style.width;
