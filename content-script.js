@@ -15,118 +15,130 @@ helper_startupfunction("youtube.com", function(){
 function floatYoutubeViewFunction(result){
 	if(result[helper_obj.floatyoutube]){ 
 		tryAgainWithTimeout(5, 500, function(){
-			var vidplayer = document.getElementById("player-container");
-			var vidTag = document.getElementsByClassName("html5-main-video")[0];
-			if(vidplayer && vidTag){
-				console.log("float video enabled");
-				var bannerViewEnabled = false;
-				var closeBannerView = false;
-				var videoWidth = "";
-				var videoHeight = "";
-				var videoTop = "";
-				var videoLeft = "";
-				window.addEventListener("scroll", function(event) {
-					
-					if(closeBannerView){
-						return;
+			console.log("float video enabled");
+			var closeBannerView = false;
+			var videoWidth = "";
+			var videoHeight = "";
+			var videoTop = "";
+			var videoLeft = "";
+			window.addEventListener("scroll", function(event) {
+				
+				if(closeBannerView){
+					return;
+				}
+				var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
+				if(!ytdWatch){
+					ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
+				}
+				if(ytdWatch && ytdWatch.hidden){
+					removedBannerAndBackToNormal();
+					return;
+				}
+				var vidplayer = document.getElementById("player-container");
+				if(vidplayer.getBoundingClientRect().bottom < 1){
+					var bannerView = document.getElementById("bannerView");
+					if(bannerView == null){
+						addBannerInTheYoutubePage();
 					}
-					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-					if(!ytdWatch){
-						ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
-					}
-					if(ytdWatch && ytdWatch.hidden){
-						return;
-					}
-					if(vidplayer.getBoundingClientRect().bottom < 1){
-						var bannerView = document.getElementById("bannerView");
-						if(bannerView == null){
-							addBannerInTheYoutubePage();
-						}
-					}
-					else{
-						var bannerView = document.getElementById("bannerView");
-						if(bannerView != null){
-							removedBannerAndBackToNormal();
-						}
-					}
-				});
-				window.addEventListener("resize", function(event){
-					var vid = document.getElementsByClassName("html5-main-video")[0];
-					videoWidth = vid.style.width;
-					videoHeight = vid.style.height;
-					videoTop = vid.style.top;
-					videoLeft = vid.style.left;
-				});
-
-				function addBannerInTheYoutubePage(){
-					var bannerHeight = 150;
-					var bannerView = document.createElement("div");
-					bannerView.id = "bannerView";
-					bannerView.style.position = "fixed";
-					bannerView.style.width  = "100%";
-					bannerView.style.height = bannerHeight + "px";
-					bannerView.style.backgroundColor = "white";
-					bannerView.style.zIndex = 61;
-					var closeButton = document.createElement("div");
-					closeButton.style.display = "table-cell";
-					closeButton.style.position = "absolute";
-					closeButton.style.right = "0px";
-					closeButton.style.cursor = "pointer";
-					closeButton.style.fontSize = "30px";
-					closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
-					closeButton.innerHTML = "X";
-					closeButton.onclick = function(event){
-						closeBannerView = true;
+				}
+				else{
+					var bannerView = document.getElementById("bannerView");
+					if(bannerView != null){
 						removedBannerAndBackToNormal();
 					}
-					bannerView.appendChild(closeButton);
-					var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-					if(!ytdWatch){
-						ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
-					}
-					ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
-					var vid = document.getElementsByClassName("html5-main-video")[0];
-					videoWidth = vid.style.width;
-					videoHeight = vid.style.height;
-					videoTop = vid.style.top;
-					videoLeft = vid.style.left;
-
-					var vHeight = bannerHeight - 3;
-					var normalWidth = 640;
-					if(typeof vid.style.width == "string"){
-						normalWidth = vid.style.width.replace("px","");
-						normalWidth = parseInt(normalWidth);
-					}
-					var normalHeight = 350;
-					if(typeof vid.style.height == "string"){
-						normalHeight = vid.style.height.replace("px","");
-						normalHeight = parseInt(normalHeight);
-					}
-					vWidth = (normalWidth / normalHeight) * vHeight;
-					vid.style.height = vHeight + "px";
-					vid.style.width = vWidth + "px";
-					vid.style.top = bannerView.getBoundingClientRect().top + "px";
-					vid.style.left = (bannerView.getBoundingClientRect().left + 10) + "px";
-					vid.style.position = "fixed";
-					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
-					vidContainer.style.zIndex = 62;
 				}
+			});
+			window.addEventListener("resize", function(event){
+				if(videoWidth != ""){
+					setTimeout(function(){
+						var vid = document.getElementsByClassName("html5-main-video")[0];
+						videoWidth = vid.style.width;
+						videoHeight = vid.style.height;
+						videoTop = vid.style.top;
+						videoLeft = vid.style.left;
+					}, 500);
+				}
+			});
 
-				function removedBannerAndBackToNormal(){
-					var bannerView = document.getElementById("bannerView");
+			function addBannerInTheYoutubePage(){
+				if(videoWidth != ""){
+					return;
+				}
+				var bannerHeight = 150;
+				var bannerView = document.createElement("div");
+				bannerView.id = "bannerView";
+				bannerView.style.position = "fixed";
+				bannerView.style.width  = "100%";
+				bannerView.style.height = bannerHeight + "px";
+				bannerView.style.backgroundColor = "white";
+				bannerView.style.zIndex = 61;
+				var closeButton = document.createElement("div");
+				closeButton.style.display = "table-cell";
+				closeButton.style.position = "absolute";
+				closeButton.style.right = "0px";
+				closeButton.style.cursor = "pointer";
+				closeButton.style.fontSize = "30px";
+				closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
+				closeButton.innerHTML = "X";
+				closeButton.onclick = function(event){
+					closeBannerView = true;
+					removedBannerAndBackToNormal();
+				}
+				bannerView.appendChild(closeButton);
+				var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
+				if(!ytdWatch){
+					ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
+				}
+				ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
+				var vid = document.getElementsByClassName("html5-main-video")[0];
+				videoWidth = vid.style.width;
+				videoHeight = vid.style.height;
+				videoTop = vid.style.top;
+				videoLeft = vid.style.left;
+
+				var vHeight = bannerHeight - 3;
+				var normalWidth = 640;
+				if(typeof vid.style.width == "string"){
+					normalWidth = vid.style.width.replace("px","");
+					normalWidth = parseInt(normalWidth);
+				}
+				var normalHeight = 350;
+				if(typeof vid.style.height == "string"){
+					normalHeight = vid.style.height.replace("px","");
+					normalHeight = parseInt(normalHeight);
+				}
+				vWidth = (normalWidth / normalHeight) * vHeight;
+				vid.style.height = vHeight + "px";
+				vid.style.width = vWidth + "px";
+				vid.style.top = bannerView.getBoundingClientRect().top + "px";
+				vid.style.left = (bannerView.getBoundingClientRect().left + 10) + "px";
+				vid.style.position = "fixed";
+				var vidContainer = document.getElementsByClassName("html5-video-container")[0];
+				vidContainer.style.zIndex = 62;
+			}
+
+			function removedBannerAndBackToNormal(){
+				var bannerView = document.getElementById("bannerView");
+				if(bannerView){
 					bannerView.remove();
+				}
+				if(videoWidth != ""){
 					var vid = document.getElementsByClassName("html5-main-video")[0];
 					vid.style.width = videoWidth;
 					vid.style.height = videoHeight;
 					vid.style.top = videoTop;
 					vid.style.left = videoLeft;
+					videoWidth = "";
+					videoHeight = "";
+					videoTop = "";
+					videoLeft = "";
 					vid.style.position = "absolute";
 					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
 					vidContainer.style.zIndex = 1;
 				}
-
-				return true;
 			}
+
+			return true;
 		});
 	}
 }
