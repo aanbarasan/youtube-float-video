@@ -2,7 +2,7 @@
   "name": "Youtube float video",
   "short_name": "Helper",
   "description": "Youtube extra functionality. Based on the reqeust will work on all the sites.",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "icons": { "16": "image/16_icon.png",
            "48": "image/48_icon.png",
           "128": "image/128_icon.png" },

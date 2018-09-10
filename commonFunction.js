@@ -2,8 +2,8 @@
 window.helper_obj = {};
 window.helper_obj.startup = "helper_startUpText";
 window.helper_obj.enableyoutube = "helper_enableYoutubeCheckBox";
-window.helper_obj.youtubepause = "helper_enableYoutubePlayerPauseButton";
 window.helper_obj.floatyoutube = "helper_floatYoutubeViewOption";
+window.helper_obj.floatyoutube_bannersize = "helper_floatYoutubeViewBannerSize";
 window.helper_obj.middleaddclose = "helper_enableYoutubeMiddleAddClose";
 
 
@@ -17,9 +17,9 @@ function helper_startupfunction(hostName, callback){
 			else{
 				var data = {};
 				data[helper_obj.enableyoutube] = true;
-				data[helper_obj.youtubepause] = false;
 				data[helper_obj.floatyoutube] = true;
 				data[helper_obj.middleaddclose] = true;
+				data[helper_obj.floatyoutube_bannersize] = 150;
 				data[helper_obj.startup] = true;
 				saveStorage(data, function(){
 					callback();

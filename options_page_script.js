@@ -1,9 +1,9 @@
 
 var enableYoutubeCheckBox = document.getElementById("enableYoutubeCheckBox");
-var enableYoutubePlayerPauseButton = document.getElementById("enableYoutubePlayerPauseButton");
 var floatYoutubeViewOption = document.getElementById("floatYoutubeViewOption");
 var enableYoutubeMiddleAddClose = document.getElementById("enableYoutubeMiddleAddClose");
-var youtubeArray = [enableYoutubePlayerPauseButton, floatYoutubeViewOption, enableYoutubeMiddleAddClose];
+var floatYoutubeViewBannerSize = document.getElementById("floatYoutubeViewBannerSize");
+var youtubeArray = [floatYoutubeViewOption, enableYoutubeMiddleAddClose];
 
 helper_startupfunction("", function(){
     helper_getStorageVariablesFromSync([helper_obj.enableyoutube], function(result){
@@ -23,12 +23,21 @@ helper_startupfunction("", function(){
           showToast("Saved Successfully");
       });
     }
-    updateCheckBox(enableYoutubePlayerPauseButton, helper_obj.youtubepause);
     updateCheckBox(floatYoutubeViewOption, helper_obj.floatyoutube);
     updateCheckBox(enableYoutubeMiddleAddClose, helper_obj.middleaddclose);
-    commonCheckBoxChangeFunction(enableYoutubePlayerPauseButton, helper_obj.youtubepause);
+    helper_getStorageVariablesFromSync([helper_obj.floatyoutube_bannersize], function(result){
+        floatYoutubeViewBannerSize.value = result[helper_obj.floatyoutube_bannersize];
+    });
+
     commonCheckBoxChangeFunction(floatYoutubeViewOption, helper_obj.floatyoutube);
     commonCheckBoxChangeFunction(enableYoutubeMiddleAddClose, helper_obj.middleaddclose);
+    floatYoutubeViewBannerSize.onchange = function(){
+        var data = {};
+        data[helper_obj.floatyoutube_bannersize] = floatYoutubeViewBannerSize.value;
+        saveStorage(data, function(){
+            showToast("Saved Successfully");
+        });
+    }
 });
 
 function commonCheckBoxChangeFunction(checkbox, option){

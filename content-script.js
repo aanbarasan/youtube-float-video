@@ -1,11 +1,10 @@
 
-var storageVariables = [helper_obj.enableyoutube, helper_obj.youtubepause, 
-					helper_obj.floatyoutube, helper_obj.middleaddclose];
+var storageVariables = [helper_obj.enableyoutube, helper_obj.floatyoutube, helper_obj.middleaddclose,
+					helper_obj.floatyoutube_bannersize];
 
 helper_startupfunction("youtube.com", function(){
 	helper_getStorageVariablesFromSync(storageVariables, function(result){
 		if(result[helper_obj.enableyoutube]){
-			// addYoutTubeKeyBoardFunctions(result);
 			startOnYoutubeFunction(result);
 			floatYoutubeViewFunction(result);
 		}
@@ -35,10 +34,13 @@ function floatYoutubeViewFunction(result){
 					return;
 				}
 				var vidplayer = document.getElementById("player-container");
-				if(vidplayer.getBoundingClientRect().bottom < 1){
-					var bannerView = document.getElementById("bannerView");
-					if(bannerView == null){
-						addBannerInTheYoutubePage();
+				if(vidplayer.getBoundingClientRect().bottom < 1 && 
+						vidplayer.getBoundingClientRect().width > 10){
+					if(vidplayer.getBoundingClientRect().bottom < 1){
+						var bannerView = document.getElementById("bannerView");
+						if(bannerView == null){
+							addBannerInTheYoutubePage();
+						}
 					}
 				}
 				else{
@@ -64,7 +66,10 @@ function floatYoutubeViewFunction(result){
 				if(videoWidth != ""){
 					return;
 				}
-				var bannerHeight = 150;
+				var bannerHeight = result[helper_obj.floatyoutube_bannersize];
+				if(bannerHeight < 50){
+					bannerHeight = 50;
+				}
 				var bannerView = document.createElement("div");
 				bannerView.id = "bannerView";
 				bannerView.style.position = "fixed";
@@ -163,25 +168,3 @@ function startOnYoutubeFunction(result){
 		});
 	}
 }
-
-function addYoutTubeKeyBoardFunctions(result){
-	var bodyTag = document.getElementsByTagName("body")[0];
-	bodyTag.addEventListener("keypress", function(event){
-		if(result[helper_obj.youtubepause]){
-			if(!((event.target.localName == "input" || event.target.localName == "textarea")
-					&& (event.target.type == "text" || event.target.type == "textarea"))){
-				if(event.charCode == 32){
-					var vid = document.getElementsByClassName("html5-main-video")[0];
-					if(vid.paused == true){
-						vid.play();
-					}
-					else{
-						vid.pause();	
-					}
-					event.preventDefault();
-				}
-			}
-		}
-	});
-}
-
