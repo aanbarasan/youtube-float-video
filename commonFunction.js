@@ -1,6 +1,5 @@
 
 window.helper_obj = {};
-window.helper_obj.startup = "helper_startUpText";
 window.helper_obj.enableyoutube = "helper_enableYoutubeCheckBox";
 window.helper_obj.floatyoutube = "helper_floatYoutubeViewOption";
 window.helper_obj.floatyoutube_bannersize = "helper_floatYoutubeViewBannerSize";
@@ -10,23 +9,33 @@ window.helper_obj.middleaddclose = "helper_enableYoutubeMiddleAddClose";
 function helper_startupfunction(hostName, callback){
 	var localHostName = window.location.hostname;
 	if(localHostName && localHostName.endsWith(hostName)){
-		helper_getStorageVariablesFromSync([helper_obj.startup], function(result){
-			if(result[helper_obj.startup] == true){
-				callback();
-			}
-			else{
-				var data = {};
-				data[helper_obj.enableyoutube] = true;
-				data[helper_obj.floatyoutube] = true;
-				data[helper_obj.middleaddclose] = true;
-				data[helper_obj.floatyoutube_bannersize] = 150;
-				data[helper_obj.startup] = true;
-				saveStorage(data, function(){
-					callback();
-				});
-			}
-		})
+		var data = {};
+		data[helper_obj.enableyoutube] = true;
+		data[helper_obj.floatyoutube] = true;
+		data[helper_obj.middleaddclose] = true;
+		data[helper_obj.floatyoutube_bannersize] = 150;
+		helper_setDefaultValueInStorage(data, callback);
 	}
+}
+
+function helper_setDefaultValueInStorage(storageVariables, callback){
+		var storageKeyArray = Object.keys(storageVariables);
+		helper_getStorageVariablesFromSync(storageKeyArray, function(result){
+				var foundUndefined = false;
+				var data = {};
+				for(var i=0;i<storageKeyArray.length;i++){
+						if(result[storageKeyArray[i]] == undefined || result[storageKeyArray[i]] == ""){
+							 data[storageKeyArray[i]] = storageVariables[storageKeyArray[i]];
+							 foundUndefined = true;
+						}
+				}
+				if(foundUndefined){
+						saveStorage(data, callback);
+				}
+				else{
+						callback();
+				}
+		})
 }
 
 function helper_getStorageVariablesFromSync(storageVariables, callback){
