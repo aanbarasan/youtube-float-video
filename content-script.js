@@ -13,29 +13,24 @@ helper_startupfunction("youtube.com", function(){
 
 function floatYoutubeViewFunction(result){
 	if(result[helper_obj.floatyoutube]){ 
-		tryAgainWithTimeout(5, 500, function(){
+		
+		window.floatVideoInYoutube = function (){
 			console.log("float video enabled");
 			var closeBannerView = false;
 			var videoWidth = "";
 			var videoHeight = "";
 			var videoTop = "";
 			var videoLeft = "";
-			window.addEventListener("scroll", function(event) {
+			document.checkingDateValue = new Date().toTimeString();
+
+			window.scrollFunctionality = function(event) {
 				
 				if(closeBannerView){
 					return;
 				}
-				var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-				if(!ytdWatch){
-					ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
-				}
-				if(ytdWatch && ytdWatch.hidden){
-					removedBannerAndBackToNormal();
-					return;
-				}
 				var vidplayer = document.getElementById("player-container");
-				if(vidplayer.getBoundingClientRect().bottom < 1 && 
-						vidplayer.getBoundingClientRect().width > 10){
+				if(vidplayer.getBoundingClientRect().width > 10 &&
+						vidplayer.getBoundingClientRect().bottom < 1){
 					var bannerView = document.getElementById("bannerView");
 					if(bannerView == null){
 						addBannerInTheYoutubePage();
@@ -47,8 +42,9 @@ function floatYoutubeViewFunction(result){
 						removedBannerAndBackToNormal();
 					}
 				}
-			});
-			window.addEventListener("resize", function(event){
+			}
+
+			window.resizeFunctionality = function(event){
 				if(videoWidth != ""){
 					setTimeout(function(){
 						var vid = document.getElementsByClassName("html5-main-video")[0];
@@ -58,7 +54,7 @@ function floatYoutubeViewFunction(result){
 						videoLeft = vid.style.left;
 					}, 500);
 				}
-			});
+			}
 
 			function addBannerInTheYoutubePage(){
 				if(videoWidth != ""){
@@ -141,8 +137,38 @@ function floatYoutubeViewFunction(result){
 				}
 			}
 
+			var oldURL = window.location.href;
+			window.clearTimeoutForUrlChange;
+			window.checkURLchange = function (currentURL){
+				if(currentURL != oldURL){
+					removeAllListenersAndReload();
+					oldURL = currentURL;
+				}
+				else {
+					clearTimeoutForUrlChange = setTimeout(function() {
+						checkURLchange(window.location.href);
+					}, 1000);
+				}
+			}
+
+			function removeAllListenersAndReload(){
+				clearTimeout(window.clearTimeoutForUrlChange);
+				removedBannerAndBackToNormal();
+				window.removeEventListener("scroll", scrollFunctionality);
+				window.removeEventListener("resize", resizeFunctionality);
+				setTimeout(function(){
+					floatVideoInYoutube();
+				},1000);
+			}
+			window.checkURLchange(oldURL);
+
+			window.addEventListener("scroll", scrollFunctionality);
+			window.addEventListener("resize", resizeFunctionality);
+
 			return true;
-		});
+		}
+
+		tryAgainWithTimeout(5, 500, floatVideoInYoutube);
 	}
 }
 
