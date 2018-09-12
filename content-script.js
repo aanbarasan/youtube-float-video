@@ -36,11 +36,9 @@ function floatYoutubeViewFunction(result){
 				var vidplayer = document.getElementById("player-container");
 				if(vidplayer.getBoundingClientRect().bottom < 1 && 
 						vidplayer.getBoundingClientRect().width > 10){
-					if(vidplayer.getBoundingClientRect().bottom < 1){
-						var bannerView = document.getElementById("bannerView");
-						if(bannerView == null){
-							addBannerInTheYoutubePage();
-						}
+					var bannerView = document.getElementById("bannerView");
+					if(bannerView == null){
+						addBannerInTheYoutubePage();
 					}
 				}
 				else{
