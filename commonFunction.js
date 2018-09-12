@@ -24,7 +24,7 @@ function helper_setDefaultValueInStorage(storageVariables, callback){
 				var foundUndefined = false;
 				var data = {};
 				for(var i=0;i<storageKeyArray.length;i++){
-						if(result[storageKeyArray[i]] == undefined || result[storageKeyArray[i]] == ""){
+						if(result[storageKeyArray[i]] == undefined || result[storageKeyArray[i]] === ""){
 							 data[storageKeyArray[i]] = storageVariables[storageKeyArray[i]];
 							 foundUndefined = true;
 						}

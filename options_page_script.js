@@ -3,7 +3,7 @@ var enableYoutubeCheckBox = document.getElementById("enableYoutubeCheckBox");
 var floatYoutubeViewOption = document.getElementById("floatYoutubeViewOption");
 var enableYoutubeMiddleAddClose = document.getElementById("enableYoutubeMiddleAddClose");
 var floatYoutubeViewBannerSize = document.getElementById("floatYoutubeViewBannerSize");
-var youtubeArray = [floatYoutubeViewOption, enableYoutubeMiddleAddClose];
+var youtubeArray = [floatYoutubeViewOption, enableYoutubeMiddleAddClose, floatYoutubeViewBannerSize];
 
 helper_startupfunction("", function(){
     helper_getStorageVariablesFromSync([helper_obj.enableyoutube], function(result){
