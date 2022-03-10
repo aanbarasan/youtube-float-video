@@ -28,7 +28,7 @@ function floatYoutubeViewFunction(result){
 				if(closeBannerView){
 					return;
 				}
-				var vidplayer = document.getElementById("player-container");
+				var vidplayer = document.getElementById("movie_player");
 				if(vidplayer.getBoundingClientRect().width > 10 &&
 						vidplayer.getBoundingClientRect().bottom < 1){
 					var bannerView = document.getElementById("bannerView");
@@ -68,10 +68,13 @@ function floatYoutubeViewFunction(result){
 				bannerView.id = "bannerView";
 				bannerView.style.position = "fixed";
 				bannerView.style.width  = "100%";
+				bannerView.style.left  = "0px";
+				bannerView.style.top  = "56px";
 				bannerView.style.height = bannerHeight + "px";
 				bannerView.style.backgroundColor = "white";
 				bannerView.style.zIndex = 61;
 				var closeButton = document.createElement("div");
+				closeButton.id = "floatViewCloseButton";
 				closeButton.style.display = "table-cell";
 				closeButton.style.position = "absolute";
 				closeButton.style.right = "0px";
@@ -84,10 +87,10 @@ function floatYoutubeViewFunction(result){
 					removedBannerAndBackToNormal();
 				}
 				bannerView.appendChild(closeButton);
-				var ytdWatch = document.getElementsByTagName("ytd-watch")[0];
-				if(!ytdWatch){
+				var ytdWatch = document.getElementsByClassName("html5-video-player")[0];
+				/*if(!ytdWatch){
 					ytdWatch = document.getElementsByTagName("ytd-watch-flexy")[0];
-				}
+				}*/
 				ytdWatch.insertBefore(bannerView, ytdWatch.firstChild);
 				var vid = document.getElementsByClassName("html5-main-video")[0];
 				videoWidth = vid.style.width;
@@ -114,6 +117,7 @@ function floatYoutubeViewFunction(result){
 				vid.style.position = "fixed";
 				var vidContainer = document.getElementsByClassName("html5-video-container")[0];
 				vidContainer.style.zIndex = 62;
+				document.getElementById("player").style.zIndex = 400
 			}
 
 			function removedBannerAndBackToNormal(){
