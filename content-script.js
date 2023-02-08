@@ -1,13 +1,9 @@
 
-var storageVariables = [helper_obj.enableyoutube, helper_obj.floatyoutube, helper_obj.middleaddclose,
-					helper_obj.floatyoutube_bannersize];
+var storageVariables = [helper_obj.floatyoutube, helper_obj.floatyoutube_bannersize];
 
 helper_startupfunction("youtube.com", function(){
 	helper_getStorageVariablesFromSync(storageVariables, function(result){
-		if(result[helper_obj.enableyoutube]){
-			startOnYoutubeFunction(result);
-			floatYoutubeViewFunction(result);
-		}
+		floatYoutubeViewFunction(result);
 	});
 });
 
@@ -80,6 +76,7 @@ function floatYoutubeViewFunction(result){
 				closeButton.style.right = "0px";
 				closeButton.style.cursor = "pointer";
 				closeButton.style.fontSize = "30px";
+				closeButton.style.color = "black";
 				closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
 				closeButton.innerHTML = "X";
 				closeButton.onclick = function(event){
@@ -112,12 +109,12 @@ function floatYoutubeViewFunction(result){
 				vWidth = (normalWidth / normalHeight) * vHeight;
 				vid.style.height = vHeight + "px";
 				vid.style.width = vWidth + "px";
-				vid.style.top = bannerView.getBoundingClientRect().top + "px";
-				vid.style.left = (bannerView.getBoundingClientRect().left + 10) + "px";
+				vid.style.top = ((bannerView.getBoundingClientRect().top) + 2) + "px";
+				vid.style.left = (bannerView.getBoundingClientRect().left + 2) + "px";
 				vid.style.position = "fixed";
 				var vidContainer = document.getElementsByClassName("html5-video-container")[0];
 				vidContainer.style.zIndex = 62;
-				document.getElementById("player").style.zIndex = 400
+				document.getElementById("player").style.zIndex = 400;
 			}
 
 			function removedBannerAndBackToNormal(){
@@ -135,9 +132,10 @@ function floatYoutubeViewFunction(result){
 					videoHeight = "";
 					videoTop = "";
 					videoLeft = "";
-					vid.style.position = "absolute";
+					vid.style.position = "static";
 					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
-					vidContainer.style.zIndex = 1;
+					vidContainer.style.zIndex = "";
+					document.getElementById("player").style.zIndex = "";
 				}
 			}
 
@@ -173,26 +171,5 @@ function floatYoutubeViewFunction(result){
 		}
 
 		tryAgainWithTimeout(5, 500, floatVideoInYoutube);
-	}
-}
-
-function startOnYoutubeFunction(result){
-	if(result[helper_obj.middleaddclose]){
-		tryAgainWithTimeout(5, 1000, function(){
-		    var head = document.getElementsByTagName('head')[0];
-			if(head != null){
-				var css = '.ad-container { display : none !important; }';
-			    var style = document.createElement('style');
-				style.type = 'text/css';
-				if (style.styleSheet){
-				  // This is required for IE8 and below.
-				  style.styleSheet.cssText = css;
-				} else {
-				  style.appendChild(document.createTextNode(css));
-				}
-				head.appendChild(style);
-				return true;
-			}
-		});
 	}
 }
