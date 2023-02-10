@@ -63,7 +63,6 @@ function floatYoutubeViewFunction(result){
 				var bannerView = document.createElement("div");
 				bannerView.id = "bannerView";
 				bannerView.style.position = "fixed";
-				bannerView.style.width  = "100%";
 				bannerView.style.left  = "0px";
 				bannerView.style.top  = "56px";
 				bannerView.style.height = bannerHeight + "px";
@@ -77,7 +76,7 @@ function floatYoutubeViewFunction(result){
 				closeButton.style.cursor = "pointer";
 				closeButton.style.fontSize = "30px";
 				closeButton.style.color = "black";
-				closeButton.style.padding = ((bannerHeight - 35) / 2) +"px";
+				closeButton.style.padding = "20px";
 				closeButton.innerHTML = "X";
 				closeButton.onclick = function(event){
 					closeBannerView = true;
@@ -107,6 +106,7 @@ function floatYoutubeViewFunction(result){
 					normalHeight = parseInt(normalHeight);
 				}
 				vWidth = (normalWidth / normalHeight) * vHeight;
+				bannerView.style.width  = (vWidth + 80 ) +"px";
 				vid.style.height = vHeight + "px";
 				vid.style.width = vWidth + "px";
 				vid.style.top = ((bannerView.getBoundingClientRect().top) + 2) + "px";
