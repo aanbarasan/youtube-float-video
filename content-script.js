@@ -113,7 +113,9 @@ function floatYoutubeViewFunction(result){
 				vid.style.left = (bannerView.getBoundingClientRect().left + 2) + "px";
 				vid.style.position = "fixed";
 				var vidContainer = document.getElementsByClassName("html5-video-container")[0];
-				vidContainer.style.zIndex = 62;
+				vidContainer.style.zIndex = 3000;
+				var moviPlayerContainer = document.getElementById("movie_player");
+				moviPlayerContainer.style.zIndex = 3000;
 				document.getElementById("player").style.zIndex = 400;
 			}
 
@@ -135,6 +137,8 @@ function floatYoutubeViewFunction(result){
 					vid.style.position = "";
 					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
 					vidContainer.style.zIndex = "";
+					var moviPlayerContainer = document.getElementById("movie_player");
+					moviPlayerContainer.style.zIndex = "";
 					document.getElementById("player").style.zIndex = "";
 				}
 			}
