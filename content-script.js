@@ -132,7 +132,7 @@ function floatYoutubeViewFunction(result){
 					videoHeight = "";
 					videoTop = "";
 					videoLeft = "";
-					vid.style.position = "static";
+					vid.style.position = "";
 					var vidContainer = document.getElementsByClassName("html5-video-container")[0];
 					vidContainer.style.zIndex = "";
 					document.getElementById("player").style.zIndex = "";
